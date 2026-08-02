@@ -120,8 +120,6 @@ const CONFIG = {
         { titulo: 'LID', cargos: ['1527001475652522267'] },
         { titulo: 'SUB', cargos: ['1527000194548502632'] },
         { titulo: 'ELITE', cargos: ['1527000169537605703'] },
-        { titulo: 'JUNIOR', cargos: ['COLOCA_AQUI_O_ID_DO_CARGO_JUNIOR'] },
-        { titulo: 'TESTE', cargos: ['COLOCA_AQUI_O_ID_DO_CARGO_TESTE'] },
         { titulo: 'MEMBRO', cargos: ['1527000128953516052'] }
     ],
 
