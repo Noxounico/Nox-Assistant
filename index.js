@@ -135,7 +135,7 @@ const CONFIG = {
         hierarquiaEsq: '<:272410anonymous:1533449386594664509>',
         hierarquiaDir: '<:272410anonymous:1533449386594664509>',
         // Coroa mostrada antes do título de cada categoria no !hierarquia.
-        coroa: '<a:crown_red:1525997691455279174>'
+        coroa: '👑'
     }
 };
 
