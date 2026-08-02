@@ -114,13 +114,13 @@ const CONFIG = {
     // Como obter o ID de um cargo: Definições do Discord > Avançado > ativar "Modo de Programador",
     // depois vai a Definições do Servidor > Cargos, clica com o botão direito no cargo > "Copiar ID do Cargo".
     CATEGORIAS_HIERARQUIA: [
-        { titulo: 'HIERARQUIA', cargos: ['1527000274038947890'] },
-        { titulo: 'ADM', cargos: ['1527000248982175764'] },
-        { titulo: 'AUX', cargos: ['1527000221089796236'] },
-        { titulo: 'LID', cargos: ['1527001475652522267'] },
-        { titulo: 'SUB', cargos: ['1527000194548502632'] },
-        { titulo: 'ELITE', cargos: ['1527000169537605703'] },
-        { titulo: 'MEMBRO', cargos: ['1527000128953516052'] }
+        { titulo: 'Hierarquia.TKTS', cargos: ['1527000274038947890'], grupo: 'gestao' },
+        { titulo: 'ADM', cargos: ['1527000248982175764'], grupo: 'gestao' },
+        { titulo: 'Aux.TKTS', cargos: ['1527000221089796236'], grupo: 'gestao' },
+        { titulo: 'Lid.TKTS', cargos: ['1527001475652522267'], grupo: 'gestao' },
+        { titulo: 'Sub.TKTS', cargos: ['1527000194548502632'], grupo: 'gestao' },
+        { titulo: 'Membro-E.TKTS', cargos: ['1527000169537605703'], grupo: 'membros' },
+        { titulo: 'Membro.TKTS', cargos: ['1527000128953516052'], grupo: 'membros' }
     ],
 
     EMOJIS: {
@@ -133,7 +133,9 @@ const CONFIG = {
         auth: '<:272410anonymous:1533449386594664509>',
         // Emojis decorativos usados antes e depois de cada nome no !hierarquia.
         hierarquiaEsq: '<:272410anonymous:1533449386594664509>',
-        hierarquiaDir: '<:272410anonymous:1533449386594664509>'
+        hierarquiaDir: '<:272410anonymous:1533449386594664509>',
+        // Coroa mostrada antes do título de cada categoria no !hierarquia.
+        coroa: '<a:crown_red:1525997691455279174>'
     }
 };
 
@@ -365,9 +367,16 @@ client.on('messageCreate', async (message) => {
     if (commandName === 'hierarquia') {
         await message.guild.members.fetch().catch(() => {}); // garante que a cache de membros está atualizada
 
+        // Canal fixo para onde a hierarquia é sempre enviada
+        const CANAL_HIERARQUIA_ID = '1531223510305996930';
+        const canalHierarquia = message.guild.channels.cache.get(CANAL_HIERARQUIA_ID) || message.channel;
+
         let conteudo = '';
+        const membrosGestao = new Set();
+        const membrosMembros = new Set();
+
         for (const categoria of CONFIG.CATEGORIAS_HIERARQUIA) {
-            conteudo += `**${categoria.titulo}**\n`;
+            conteudo += `${CONFIG.EMOJIS.coroa} **${categoria.titulo}**\n`;
 
             const membrosCategoria = message.guild.members.cache.filter(m =>
                 categoria.cargos.some(cargoId => m.roles.cache.has(cargoId))
@@ -378,15 +387,28 @@ client.on('messageCreate', async (message) => {
             } else {
                 membrosCategoria.forEach(membro => {
                     conteudo += `${CONFIG.EMOJIS.hierarquiaEsq} ${membro} ${CONFIG.EMOJIS.hierarquiaDir}\n`;
+                    if (categoria.grupo === 'membros') {
+                        membrosMembros.add(membro.id);
+                    } else {
+                        membrosGestao.add(membro.id);
+                    }
                 });
             }
             conteudo += '\n';
         }
 
+        const totalGestao = membrosGestao.size;
+        const totalMembros = membrosMembros.size;
+        const totalGeral = totalGestao + totalMembros;
+
+        conteudo += `${CONFIG.EMOJIS.coroa} Gestão.CUP | (${totalGestao})\n`;
+        conteudo += `${CONFIG.EMOJIS.coroa} Membros | (${totalMembros})\n`;
+        conteudo += `${CONFIG.EMOJIS.coroa} **Total (${totalGeral})**\n`;
+
         // Discord limita mensagens a 2000 caracteres — se a hierarquia for grande, divide em várias mensagens.
         const blocos = conteudo.trim().match(/[\s\S]{1,1900}(\n|$)/g) || [conteudo.trim()];
         for (const bloco of blocos) {
-            await message.channel.send({ content: bloco.trim() });
+            await canalHierarquia.send({ content: bloco.trim() });
         }
         return responderEApagar({ content: `${CONFIG.EMOJIS.sucesso} Hierarquia enviada com sucesso!` });
     }
