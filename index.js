@@ -114,13 +114,13 @@ const CONFIG = {
     // Como obter o ID de um cargo: Definições do Discord > Avançado > ativar "Modo de Programador",
     // depois vai a Definições do Servidor > Cargos, clica com o botão direito no cargo > "Copiar ID do Cargo".
     CATEGORIAS_HIERARQUIA: [
-        { titulo: 'Hierarquia.TKTS', cargos: ['1527000274038947890'], grupo: 'gestao' },
+        { titulo: 'Hierarquia.Cup', cargos: ['1527000274038947890'], grupo: 'gestao' },
         { titulo: 'ADM', cargos: ['1527000248982175764'], grupo: 'gestao' },
-        { titulo: 'Aux.TKTS', cargos: ['1527000221089796236'], grupo: 'gestao' },
-        { titulo: 'Lid.TKTS', cargos: ['1527001475652522267'], grupo: 'gestao' },
-        { titulo: 'Sub.TKTS', cargos: ['1527000194548502632'], grupo: 'gestao' },
-        { titulo: 'Membro-E.TKTS', cargos: ['1527000169537605703'], grupo: 'membros' },
-        { titulo: 'Membro.TKTS', cargos: ['1527000128953516052'], grupo: 'membros' }
+        { titulo: 'Aux.Cup', cargos: ['1527000221089796236'], grupo: 'gestao' },
+        { titulo: 'Lid.Cup', cargos: ['1527001475652522267'], grupo: 'gestao' },
+        { titulo: 'Sub.Cup', cargos: ['1527000194548502632'], grupo: 'gestao' },
+        { titulo: 'Membro-E.Cup', cargos: ['1527000169537605703'], grupo: 'membros' },
+        { titulo: 'Membro.Cup', cargos: ['1527000128953516052'], grupo: 'membros' }
     ],
 
     EMOJIS: {
@@ -840,8 +840,8 @@ client.on('interactionCreate', async (interaction) => {
                 .setFooter({ text: `Votação iniciada por ${interaction.user.tag}` });
 
             const votacaoMsg = await canalVotacoes.send({ embeds: [embed] });
-            await votacaoMsg.react('👍');
-            await votacaoMsg.react('👎');
+            await votacaoMsg.react('✅');
+            await votacaoMsg.react('❌');
 
             return interaction.editReply({ content: `${CONFIG.EMOJIS.sucesso} Votação enviada com sucesso para ${canalVotacoes}!` });
         }
