@@ -114,7 +114,7 @@ const CONFIG = {
     // Como obter o ID de um cargo: Definições do Discord > Avançado > ativar "Modo de Programador",
     // depois vai a Definições do Servidor > Cargos, clica com o botão direito no cargo > "Copiar ID do Cargo".
     CATEGORIAS_HIERARQUIA: [
-        { titulo: 'CUPULA', cargos: ['1527000274038947890'], grupo: 'gestao' },
+        { titulo: 'HIERARQUIA CUPULA', cargos: ['1527000274038947890'], grupo: 'gestao' },
         { titulo: 'ADM', cargos: ['1527000248982175764'], grupo: 'gestao' },
         { titulo: 'AUX', cargos: ['1527000221089796236'], grupo: 'gestao' },
         { titulo: 'LID', cargos: ['1527001475652522267'], grupo: 'gestao' },
