@@ -116,11 +116,11 @@ const CONFIG = {
     CATEGORIAS_HIERARQUIA: [
         { titulo: 'CUPULA', cargos: ['1527000274038947890'], grupo: 'gestao' },
         { titulo: 'ADM', cargos: ['1527000248982175764'], grupo: 'gestao' },
-        { titulo: 'Aux.Cup', cargos: ['1527000221089796236'], grupo: 'gestao' },
-        { titulo: 'Lid.Cup', cargos: ['1527001475652522267'], grupo: 'gestao' },
-        { titulo: 'Sub.Cup', cargos: ['1527000194548502632'], grupo: 'gestao' },
-        { titulo: 'Membro-E.Cup', cargos: ['1527000169537605703'], grupo: 'membros' },
-        { titulo: 'Membro.Cup', cargos: ['1527000128953516052'], grupo: 'membros' }
+        { titulo: 'AUX', cargos: ['1527000221089796236'], grupo: 'gestao' },
+        { titulo: 'LID', cargos: ['1527001475652522267'], grupo: 'gestao' },
+        { titulo: 'SUB', cargos: ['1527000194548502632'], grupo: 'gestao' },
+        { titulo: 'MEMBRO-E', cargos: ['1527000169537605703'], grupo: 'membros' },
+        { titulo: 'MEMBRO', cargos: ['1527000128953516052'], grupo: 'membros' }
     ],
 
     EMOJIS: {
