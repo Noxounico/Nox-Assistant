@@ -81,12 +81,12 @@ const CONFIG = {
     PREFIXO: '!',
     
     CARGOS_DISPONIVEIS: [
-        { id_menu: 'set_aux', nome: 'Auxiliar', sufixo: 'Aux', tagNick: 'Aux.Cup', emoji: '1520249625276186654', desc: 'Solicitar o set de Auxiliar' },
-        { id_menu: 'set_lid', nome: 'Líder', sufixo: 'Lid', tagNick: 'Lid.Cup', emoji: '1520278427645509813', desc: 'Solicitar o set de Líder' },
-        { id_menu: 'set_sub', nome: 'Sub-Líder', sufixo: 'Sub', tagNick: 'Sub.Cup', emoji: '1520278431034773565', desc: 'Solicitar o set de Sub-Líder' },
-        { id_menu: 'set_gest', nome: 'Gestor', sufixo: 'Gest', tagNick: 'Ges.Cup', emoji: '1520249618380750908', desc: 'Solicitar o set de Gestor' },
-        { id_menu: 'set_elite', nome: 'Elite', sufixo: 'Elite', tagNick: 'Cup.e', emoji: '1520249626731614288', desc: 'Solicitar o set de Elite' },
-        { id_menu: 'set_membro', nome: 'Membro', sufixo: 'Membro', tagNick: 'Cup', emoji: '1520283853116276836', desc: 'Solicitar o set de Membro' }
+        { id_menu: 'set_aux', nome: 'Auxiliar', sufixo: 'Aux', tagNick: 'Aux.Máfia', emoji: '1520249625276186654', desc: 'Solicitar o set de Auxiliar' },
+        { id_menu: 'set_lid', nome: 'Líder', sufixo: 'Lid', tagNick: 'Lid.Máfia', emoji: '1520278427645509813', desc: 'Solicitar o set de Líder' },
+        { id_menu: 'set_sub', nome: 'Sub-Líder', sufixo: 'Sub', tagNick: 'Sub.Máfia', emoji: '1520278431034773565', desc: 'Solicitar o set de Sub-Líder' },
+        { id_menu: 'set_gest', nome: 'Gestor', sufixo: 'Gest', tagNick: 'Ges.Máfia', emoji: '1520249618380750908', desc: 'Solicitar o set de Gestor' },
+        { id_menu: 'set_elite', nome: 'Elite', sufixo: 'Elite', tagNick: 'Máfia.e', emoji: '1520249626731614288', desc: 'Solicitar o set de Elite' },
+        { id_menu: 'set_membro', nome: 'Membro', sufixo: 'Membro', tagNick: 'Máfia', emoji: '1520283853116276836', desc: 'Solicitar o set de Membro' }
     ],
 
     CATEGORIAS_IDEIAS: [
@@ -113,7 +113,7 @@ const CONFIG = {
     // Como obter o ID de um cargo: Definições do Discord > Avançado > ativar "Modo de Programador",
     // depois vai a Definições do Servidor > Cargos, clica com o botão direito no cargo > "Copiar ID do Cargo".
     CATEGORIAS_HIERARQUIA: [
-        { titulo: 'HIERARQUIA CUPULA', cargos: ['1527000274038947890'], grupo: 'gestao' },
+        { titulo: 'HIERARQUIA MÁFIA', cargos: ['1527000274038947890'], grupo: 'gestao' },
         { titulo: 'ADM', cargos: ['1527000248982175764'], grupo: 'gestao' },
         { titulo: 'AUX', cargos: ['1527000221089796236'], grupo: 'gestao' },
         { titulo: 'LID', cargos: ['1527001475652522267'], grupo: 'gestao' },
@@ -276,19 +276,19 @@ client.on('messageCreate', async (message) => {
             .addFields(
                 {
                     name: '👑 ADMIN 1',
-                    value: '`/status2` - Ver o status de todos os jogadores na cidade\n`/energetico` - energetico infinito em si mesmo\n`/emote2` - Forçar jogador a usar uma animação\n`/derrubar` - Derrubar jogador\n`/setmochila` - Aumentar mochila de jogador\n`/mochilareset` - Resetar mochila de jogador\n`/limparinv` - Limpar inventário de jogador\n`/carcolor` - Alterar cor do veículo\n`/addnitro` - Adicionar nitro ao veículo\n`/item` - Criar item no inventário\n`/kickall` - Expulsar todos da cidade\n`/tuning` - Tunar veículo automaticamente\n`/gem` - Adicionar gemas\n`/remgem` - Remover gemas\n`/money` - Spawnar dinheiro\n`/rdinheiro` - Remover dinheiro do banco\n`/blindado` - Blindar veículo\n`/copiarroupa` - Copiar roupa de jogador\n`/addfuel` - Adicionar gasolina\n`/resetp` - Resetar aparência do personagem\n`/spawn` - Voltar para o spawn'
+                    value: '`/status2` - Ver o status de todos os jogadores na cidade\n`/energetico` - energetico infinito em si mesmo\n`/emote2` - Forçar jogador a usar uma animação\n`/derrubar` - Derrubar jogador\n`/setmochila` - Aumentar mochila de jogador\n`/mochilareset` - Resetar mochila de jogador\n`/limparinv` - Limpar inventário de jogador\n`/carcolor` - Alterar cor do veículo\n`/addnitro` - Adicionar nitro ao veículo\n`/item` - Criar item no inventário\n`/kickall` - Expulsar todos da cidade\n`/tuning` - Tunar veículo automaticamente\n`/gem` - Adicionar gemas\n`/remgem` - Remover gemas\n`/money` - Spawnar dinheiro\n`/rdinheiro` - Remover dinheiro do banco\n`/blindado` - Blindar veículo\n`/copiarroupa` - Copiar roupa de jogador\n`/addfuel` - Adicionar gasolina\n`/resetp` - Resetar aparência do personagem\n`/spawn` - Voltar para o spawn\n`/prisaostaff` - Prisão staff\n`/removerp` - Remover RP\n`/reduzirp` - Reduzir RP\n`/rbl id` - RBL por ID'
                 },
                 {
                     name: '👑 ADMIN 2',
-                    value: '`/mundo` - Alterar sua dimensão\n`/mundo2` - Alterar dimensão de outro jogador\n`/god2` - Dar god em área\n`/good` - Recuperar vida, fome, sede e colete\n`/kick` - Expulsar jogador da cidade\n`/ban` - Banir jogador\n`/unban` - Remover ban\n`/car` - Spawnar veículo'
+                    value: '`/mundo` - Alterar sua dimensão\n`/mundo2` - Alterar dimensão de outro jogador\n`/god2` - Dar god em área\n`/good` - Recuperar vida, fome, sede e colete\n`/kick` - Expulsar jogador da cidade\n`/ban` - Banir jogador\n`/unban` - Remover ban\n`/car` - Spawnar veículo\n`/prisaostaff` - Prisão staff\n`/removerp` - Remover RP\n`/reduzirp` - Reduzir RP\n`/rbl id` - RBL por ID'
                 },
                 {
                     name: '👑 ADMIN 3',
-                    value: '`/tpcds` - Teleportar para coordenadas\n`/group` - Adicionar grupo a jogador\n`/ungroup` - Remover grupo de jogador\n`/fix` - Reparar veículo\n`/vergroups` - Ver grupos'
+                    value: '`/tpcds` - Teleportar para coordenadas\n`/group` - Adicionar grupo a jogador\n`/ungroup` - Remover grupo de jogador\n`/fix` - Reparar veículo\n`/vergroups` - Ver grupos\n`/prisaostaff` - Prisão staff\n`/removerp` - Remover RP\n`/reduzirp` - Reduzir RP\n`/rbl id` - RBL por ID'
                 },
                 {
                     name: '👑 ADMIN 4',
-                    value: '`/god` - Dar god em si mesmo ou jogador\n`/nc` - Ativar noclip\n`/tptome` - Puxar jogador até você\n`/tpto` - Ir até jogador\n`/tpway` - Teleportar para waypoint\n`/debug2` - Ver hash dos props\n`/limparea` - Limpar objetos e marcas da área\n`/dv` - Deletar veículo'
+                    value: '`/god` - Dar god em si mesmo ou jogador\n`/nc` - Ativar noclip\n`/tptome` - Puxar jogador até você\n`/tpto` - Ir até jogador\n`/tpway` - Teleportar para waypoint\n`/debug2` - Ver hash dos props\n`/limparea` - Limpar objetos e marcas da área\n`/dv` - Deletar veículo\n`/prisaostaff` - Prisão staff\n`/removerp` - Remover RP\n`/reduzirp` - Reduzir RP\n`/rbl id` - RBL por ID'
                 }
             )
             .setFooter({ text: 'NoxAssistant 2026 ©' });
@@ -351,7 +351,7 @@ client.on('messageCreate', async (message) => {
         const totalMembros = membrosMembros.size;
         const totalGeral = totalGestao + totalMembros;
 
-        conteudo += `${CONFIG.EMOJIS.coroa} Gestão.CUP | (${totalGestao})\n`;
+        conteudo += `${CONFIG.EMOJIS.coroa} Gestão.MÁFIA | (${totalGestao})\n`;
         conteudo += `${CONFIG.EMOJIS.coroa} Membros | (${totalMembros})\n`;
         conteudo += `${CONFIG.EMOJIS.coroa} **Total (${totalGeral})**\n`;
 
@@ -1133,7 +1133,7 @@ client.on('interactionCreate', async (interaction) => {
                 pedidosPendentes.delete(userId);
 
                 const cargoConfig = CONFIG.CARGOS_DISPONIVEIS.find(c => role.name.endsWith(c.sufixo));
-                const prefixo = cargoConfig ? cargoConfig.tagNick : 'Cup';
+                const prefixo = cargoConfig ? cargoConfig.tagNick : 'Máfia';
 
                 let novoNick = `${prefixo} 🎭 | ${nomeInGame} ${passaporte}`;
                 if (novoNick.length > 32) novoNick = novoNick.substring(0, 32);
