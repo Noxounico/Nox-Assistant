@@ -22,23 +22,17 @@ const fs = require('fs');
 const path = require('path');
 
 // ---- Proteção contra instâncias duplicadas do bot ----
-// Evita que o mesmo bot fique "duplicado" no Discord quando corres
-// `node index.js` mais do que uma vez (ex: 2 terminais abertos, ou
-// esqueceste-te de fechar a janela anterior).
 const LOCK_FILE = path.join(__dirname, 'bot.lock');
 
 function verificarInstanciaUnica() {
     if (fs.existsSync(LOCK_FILE)) {
         const pidAntigo = parseInt(fs.readFileSync(LOCK_FILE, 'utf8'), 10);
         try {
-            // process.kill(pid, 0) não mata nada, só testa se o processo existe
             process.kill(pidAntigo, 0);
             console.error(`❌ Já existe uma instância deste bot a correr (PID ${pidAntigo}).`);
             console.error(`   Fecha essa janela/processo antes de abrir uma nova, ou apaga "bot.lock" se tiveres a certeza que não há nenhum a correr.`);
             process.exit(1);
-        } catch (e) {
-            // O PID guardado já não existe (bot.lock ficou "preso" de uma vez anterior) -> pode continuar
-        }
+        } catch (e) {}
     }
     fs.writeFileSync(LOCK_FILE, String(process.pid), 'utf8');
 }
@@ -106,12 +100,6 @@ const CONFIG = {
         { id_menu: 'agenda_evento', nome: 'Evento Programado', desc: 'Agendar data e hora para evento' }
     ],
 
-    // ---- Configuração do comando !hierarquia ----
-    // Para cada categoria, "cargos" é uma lista de IDs de cargo (roles) do Discord.
-    // Todos os membros que tiverem QUALQUER um desses cargos aparecem listados nessa secção.
-    // ⚠️ TENS DE SUBSTITUIR os valores "COLOCA_AQUI_..." pelos IDs reais dos teus cargos!
-    // Como obter o ID de um cargo: Definições do Discord > Avançado > ativar "Modo de Programador",
-    // depois vai a Definições do Servidor > Cargos, clica com o botão direito no cargo > "Copiar ID do Cargo".
     CATEGORIAS_HIERARQUIA: [
         { titulo: 'HIERARQUIA MÁFIA', cargos: ['1527000274038947890'], grupo: 'gestao' },
         { titulo: 'ADM', cargos: ['1527000248982175764'], grupo: 'gestao' },
@@ -128,12 +116,10 @@ const CONFIG = {
         info: '<:info:1520249612542279780>',
         cancelar: '<:cancel:1520249621589524571>',
         ticket: '<:ticket:1520278432687325195>',
-        // ID de emoji personalizado atualizado (válido, enviado pelo utilizador)
         auth: '<:272410anonymous:1533449386594664509>',
         // Emojis decorativos usados antes e depois de cada nome no !hierarquia.
-        hierarquiaEsq: '<:272410anonymous:1533449386594664509>',
-        hierarquiaDir: '<:272410anonymous:1533449386594664509>',
-        // Coroa mostrada antes do título de cada categoria no !hierarquia.
+        hierarquiaEsq: '<:272410anonymous:1534181186216132688>',
+        hierarquiaDir: '<:272410anonymous:1534181186216132688>',
         coroa: '👑'
     }
 };
@@ -156,9 +142,6 @@ async function responderETemporizar(interactionOrMessage, conteudo, ephemeral = 
     }
 }
 
-// Os comandos deixaram de ser de barra (/) — agora são todos por prefixo (!),
-// tratados no listener client.on('messageCreate', ...) mais abaixo.
-// IDs dos cargos que podem aprovar/rejeitar Ideias / Ações:
 const CARGOS_APROVAR_IDEIAS = [
     '1527000274038947890',
     '1527000248982175764',
@@ -172,8 +155,6 @@ function membroPodeAprovarIdeias(member) {
 client.once('clientReady', async () => {
     console.log(`🤖 ${client.user.tag} está online e pronto a funcionar com comandos por prefixo (${CONFIG.PREFIXO})!`);
 
-    // Apaga quaisquer comandos de barra (/) antigos que possam ter ficado registados
-    // no Discord de testes anteriores, para não aparecerem duplicados nem confundirem.
     try {
         const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
         await rest.put(Routes.applicationCommands(client.user.id), { body: [] });
@@ -249,10 +230,8 @@ client.on('messageCreate', async (message) => {
     const args = message.content.slice(CONFIG.PREFIXO.length).trim().split(/\s+/);
     const commandName = args.shift().toLowerCase();
 
-    // Apaga a mensagem do comando (ex: "!ideias") do canal, para não ficar lá visível
     message.delete().catch(() => {});
 
-    // Função auxiliar para responder e apagar automaticamente após 5 segundos
     async function responderEApagar(payloadOptions) {
         const rep = await message.channel.send(payloadOptions);
         setTimeout(() => rep.delete().catch(() => {}), 3000);
@@ -315,9 +294,8 @@ client.on('messageCreate', async (message) => {
     }
 
     if (commandName === 'hierarquia') {
-        await message.guild.members.fetch().catch(() => {}); // garante que a cache de membros está atualizada
+        await message.guild.members.fetch().catch(() => {});
 
-        // Canal fixo para onde a hierarquia é sempre enviada
         const CANAL_HIERARQUIA_ID = '1531223510305996930';
         const canalHierarquia = message.guild.channels.cache.get(CANAL_HIERARQUIA_ID) || message.channel;
 
@@ -355,7 +333,6 @@ client.on('messageCreate', async (message) => {
         conteudo += `${CONFIG.EMOJIS.coroa} Membros | (${totalMembros})\n`;
         conteudo += `${CONFIG.EMOJIS.coroa} **Total (${totalGeral})**\n`;
 
-        // Discord limita mensagens a 2000 caracteres — se a hierarquia for grande, divide em várias mensagens.
         const blocos = conteudo.trim().match(/[\s\S]{1,1900}(\n|$)/g) || [conteudo.trim()];
         for (const bloco of blocos) {
             await canalHierarquia.send({ content: bloco.trim() });
